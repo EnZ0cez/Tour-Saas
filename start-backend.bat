@@ -1,24 +1,47 @@
-#!/bin/bash
-# 启动后端服务脚本
+@echo off
+title Tour SaaS Platform
 
-echo "正在启动智慧旅游SaaS平台后端服务..."
+echo ==========================================
+echo   Tour SaaS Platform - 启动脚本
+echo ==========================================
 
-# 检查Maven是否安装
-if ! command -v mvn &> /dev/null
-then
-    echo "错误: 未找到Maven，请先安装Maven"
-    exit 1
-fi
+echo 正在检查Java环境...
+java -version >nul 2>&1
+if %errorlevel% neq 0 (
+    echo 错误: 未找到Java运行环境，请先安装JDK 8或更高版本
+    pause
+    exit /b 1
+)
 
-# 进入后端目录
-cd tour-saas-backend
+echo 正在检查Maven环境...
+mvn -v >nul 2>&1
+if %errorlevel% neq 0 (
+    echo 错误: 未找到Maven，请先安装Maven 3.6或更高版本
+    pause
+    exit /b 1
+)
 
-# 清理并编译项目
-echo "正在编译项目..."
-mvn clean compile
+echo 正在检查MySQL服务...
+echo 请确保MySQL服务已在运行，且已按README.md中的说明创建了数据库和用户。
+echo 如果尚未设置，请先参考README.md中的数据库配置部分。
+pause
 
-# 运行Spring Boot应用
-echo "正在启动Spring Boot应用..."
-mvn spring-boot:run
+echo.
+echo ==========================================
+echo   正在启动后端服务...
+echo ==========================================
+echo 后端服务将运行在 http://localhost:8080
+echo.
 
-echo "后端服务启动完成！"
+cd /d "%~dp0tour-saas-backend"
+start "Tour SaaS Backend" mvn spring-boot:run
+
+echo.
+echo ==========================================
+echo   后端服务启动命令已执行
+echo ==========================================
+echo 请查看新打开的终端窗口了解启动详情
+echo 如遇到数据库连接问题，请检查MySQL配置
+echo.
+
+pause

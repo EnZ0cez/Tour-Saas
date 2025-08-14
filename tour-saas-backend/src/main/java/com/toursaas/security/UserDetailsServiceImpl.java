@@ -1,4 +1,4 @@
-package com.toursaas.service;
+package com.toursaas.security;
 
 import com.toursaas.entity.User;
 import com.toursaas.repository.UserRepository;

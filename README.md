@@ -69,11 +69,54 @@ tour-saas/
 - Node.js 14+
 - npm 6+
 
+### 详细启动指南
+有关详细的环境配置和启动说明，请查看 [启动指南](docs/STARTUP_GUIDE.md)。
+
 ### 1. 数据库配置
 
-```sql
-CREATE DATABASE tour_saas DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
+#### 方法一：使用默认root用户（推荐新手）
+1. 确保MySQL服务正在运行
+2. 登录MySQL：
+   ```bash
+   mysql -u root -p
+   ```
+3. 执行以下SQL创建数据库：
+   ```sql
+   CREATE DATABASE tour_saas DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   ```
+
+#### 方法二：创建专用用户（推荐生产环境）
+1. 登录MySQL：
+   ```bash
+   mysql -u root -p
+   ```
+2. 执行以下SQL创建数据库和用户：
+   ```sql
+   -- 创建数据库
+   CREATE DATABASE tour_saas DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   
+   -- 创建专用用户
+   CREATE USER 'toursaas'@'localhost' IDENTIFIED BY 'toursaas123';
+   
+   -- 授予权限
+   GRANT ALL PRIVILEGES ON tour_saas.* TO 'toursaas'@'localhost';
+   
+   -- 刷新权限
+   FLUSH PRIVILEGES;
+   ```
+
+3. 如果使用专用用户，请相应修改`src/main/resources/application.yml`中的数据库配置：
+   ```yaml
+   spring:
+     datasource:
+       url: jdbc:mysql://localhost:3306/tour_saas?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+       username: toursaas
+       password: toursaas123
+       driver-class-name: com.mysql.cj.jdbc.Driver
+   ```
+
+#### 初始化数据（可选）
+项目提供了初始化SQL脚本，在`src/main/resources/db/init.sql`中，包含了表结构和初始数据。
 
 ### 2. 后端运行
 

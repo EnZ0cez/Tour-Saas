@@ -40,7 +40,7 @@ public class ProductService {
         product.setImageUrl(productDetails.getImageUrl());
         product.setDuration(productDetails.getDuration());
         product.setType(productDetails.getType());
-        product.setActive(productDetails.getActive());
+        product.setIsActive(productDetails.isActive());
         product.setUpdatedAt(new java.util.Date());
         
         return productRepository.save(product);

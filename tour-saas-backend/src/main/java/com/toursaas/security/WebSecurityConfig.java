@@ -1,6 +1,5 @@
 package com.toursaas.security;
 
-import com.toursaas.security.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
