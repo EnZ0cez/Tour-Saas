@@ -288,7 +288,8 @@ chore: 构建过程或辅助工具的变动
 如有技术问题，请联系：
 - 项目地址: [https://github.com/EnZ0cez/Tour-Saas/](https://github.com/EnZ0cez/Tour-Saas/)
 - 邮箱: enzochen617@gmail.com
+- 问题反馈: [GitHub Issues](https://github.com/EnZ0cez/Tour-Saas/issues)
 
 ---
 
-*最后更新: 2025-08-18*
+*最后更新: 2025-08-19*

@@ -14,13 +14,13 @@
 
 ## 快速链接
 
-- [GitHub仓库](https://github.com/yourusername/tour-saas)
-- [问题跟踪](https://github.com/yourusername/tour-saas/issues)
-- [发布版本](https://github.com/yourusername/tour-saas/releases)
+- [GitHub仓库](https://github.com/EnZ0cez/Tour-Saas)
+- [问题跟踪](https://github.com/EnZ0cez/Tour-Saas/issues)
+- [发布版本](https://github.com/EnZ0cez/Tour-Saas/releases)
 
 ## 联系我们
 
 如有任何问题，请通过以下方式联系我们：
 
-- 邮件: docs@toursaas.com
-- GitHub Issues: [创建新问题](https://github.com/yourusername/tour-saas/issues/new)
+- 邮件: enzochen617@gmail.com
+- GitHub Issues: [创建新问题](https://github.com/EnZ0cez/Tour-Saas/issues/new)

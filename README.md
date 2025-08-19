@@ -20,24 +20,28 @@
 ## 🏗️ 技术架构
 
 ### 后端技术栈
-- **Spring Boot 3.2+** - 快速开发框架
+- **Spring Boot 3.2.1** - 快速开发框架
 - **Spring Security** - 安全框架
-- **MyBatis** - ORM框架
+- **MyBatis 3.0.3** - ORM框架
 - **MySQL 8.0** - 关系型数据库
-- **JWT** - Token认证机制
+- **JWT 0.12.3** - Token认证机制
 - **Maven** - 项目构建工具
+- **Java 21** - 开发语言
 - **LLM Integration** - 大语言模型智能推荐
-  - **Ollama** - 本地LLM服务支持
-  - **OpenAI** - 云端GPT模型支持
-  - **WebFlux** - 响应式编程
-  - **WebClient** - 异步HTTP客户端
+  - **Spring WebFlux** - 响应式编程
+  - **Jackson** - JSON处理
+  - **HttpClient 5** - HTTP客户端
+  - **Bean Validation** - 数据验证
 
 ### 前端技术栈
-- **Vue 3.2+** - 渐进式JavaScript框架，采用Composition API
-- **Element Plus** - Vue 3组件库
-- **Vue Router 4** - 路由管理
-- **Vuex 4** - 状态管理
-- **Axios** - HTTP客户端
+- **Vue 3.2.13** - 渐进式JavaScript框架，采用Composition API
+- **Element Plus 2.2.0** - Vue 3组件库
+- **Vue Router 4.0.3** - 路由管理
+- **Vuex 4.0.2** - 状态管理
+- **Axios 0.27.2** - HTTP客户端
+- **js-cookie 3.0.1** - Cookie操作库
+- **Vue CLI 5** - 构建工具
+- **Sass** - CSS预处理器
 - **LLM UI Components** - 大语言模型用户界面组件
 - **Responsive Design** - 响应式设计，支持多端访问
 
@@ -69,11 +73,11 @@ tour-saas/
 ## 🚀 快速开始
 
 ### 环境要求
-- JDK 17+ (Spring Boot 3.2+要求)
-- Maven 3.6+
-- MySQL 8.0
-- Node.js 14+
-- npm 6+
+- **JDK 21+** (Spring Boot 3.2.1要求)
+- **Maven 3.6+**
+- **MySQL 8.0+**
+- **Node.js 14+**
+- **npm 6+**
 
 ### LLM服务要求 (可选)
 - **Ollama (本地LLM)**: 
@@ -135,8 +139,8 @@ tour-saas/
 
 ```bash
 # 克隆项目
-git clone https://github.com/yourusername/tour-saas.git
-cd tour-saas/tour-saas-backend
+git clone https://github.com/EnZ0cez/Tour-Saas.git
+cd Tour-Saas/tour-saas-backend
 
 # 修改数据库配置
 # 编辑 src/main/resources/application.yml
@@ -146,19 +150,37 @@ mvn clean install
 mvn spring-boot:run
 ```
 
+或者使用提供的启动脚本：
+```bash
+# Windows
+start-backend.bat
+
+# Linux/Mac
+./start-backend.sh
+```
+
 后端服务将运行在 `http://localhost:8080`
 
 ### 3. 前端运行
 
 ```bash
 # 打开新终端窗口
-cd tour-saas/tour-saas-frontend
+cd Tour-Saas/tour-saas-frontend
 
 # 安装依赖
 npm install
 
 # 启动开发服务器
 npm run serve
+```
+
+或者使用提供的启动脚本：
+```bash
+# Windows
+start-frontend.bat
+
+# Linux/Mac
+./start-frontend.sh
 ```
 
 前端服务将运行在 `http://localhost:8081`
@@ -370,8 +392,9 @@ npm run build
 
 ## 📞 联系方式
 
-- 项目地址: [https://github.com/EnZ0cez/Tour-Saas/](https://github.com/yourusername/tour-saas)
+- 项目地址: [https://github.com/EnZ0cez/Tour-Saas/](https://github.com/EnZ0cez/Tour-Saas/)
 - 邮箱: enzochen617@gmail.com
+- 问题反馈: [GitHub Issues](https://github.com/EnZ0cez/Tour-Saas/issues)
 
 ## 🙏 致谢
 

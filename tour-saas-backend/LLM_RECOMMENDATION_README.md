@@ -243,3 +243,10 @@ logging:
 - Real-time recommendation updates
 - Multi-language support
 - Integration with external travel APIs
+
+## 技术支持
+
+如有技术问题，请联系：
+- 项目地址: [https://github.com/EnZ0cez/Tour-Saas/](https://github.com/EnZ0cez/Tour-Saas/)
+- 邮箱: enzochen617@gmail.com
+- 问题反馈: [GitHub Issues](https://github.com/EnZ0cez/Tour-Saas/issues)
