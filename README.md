@@ -26,7 +26,7 @@
 - **MySQL 8.0** - 关系型数据库
 - **JWT 0.12.3** - Token认证机制
 - **Maven** - 项目构建工具
-- **Java 21** - 开发语言
+- **Java 17** - 开发语言
 - **LLM Integration** - 大语言模型智能推荐
   - **Spring WebFlux** - 响应式编程
   - **Jackson** - JSON处理
@@ -73,7 +73,7 @@ tour-saas/
 ## 🚀 快速开始
 
 ### 环境要求
-- **JDK 21+** (Spring Boot 3.2.1要求)
+- **JDK 17+** (Spring Boot 3.2.1要求)
 - **Maven 3.6+**
 - **MySQL 8.0+**
 - **Node.js 14+**

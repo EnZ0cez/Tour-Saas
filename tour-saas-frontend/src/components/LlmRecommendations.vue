@@ -44,7 +44,7 @@
                 <p class="description">{{ recommendation.description }}</p>
                 <div class="score">
                   <el-rate 
-                    v-model="recommendation.score / 2" 
+                    :model-value="recommendation.score / 2" 
                     disabled 
                     text-color="#ff9900"
                   />
