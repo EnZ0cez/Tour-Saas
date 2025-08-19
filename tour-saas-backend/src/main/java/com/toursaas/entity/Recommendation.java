@@ -1,7 +1,7 @@
 package com.toursaas.entity;
 
 import lombok.Data;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Data

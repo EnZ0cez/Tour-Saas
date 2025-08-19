@@ -17,3 +17,18 @@ jwt:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.toursaas.entity
+
+# LLM配置
+llm:
+  provider: ollama  # ollama, openai
+  model: llama3.2    # default model name
+  base-url: http://localhost:11434  # default base url
+  api-key: ${OPENAI_API_KEY:}  # OpenAI API key
+  max-tokens: 1000
+  temperature: 0.7
+  timeout: 30s
+  
+  # Provider specific settings
+  openai-model: gpt-3.5-turbo
+  ollama-model: llama3.2
+  ollama-base-url: http://localhost:11434

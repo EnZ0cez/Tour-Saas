@@ -6,34 +6,40 @@
 
 面向中小型旅行社的数字化解决方案，整合旅游产品展示、智能推荐及多端管理功能，消除多平台操作痛点。
 
-<p align="center">
-  <img src="docs/images/tour-saas-architecture.png" alt="系统架构图" width="80%">
-</p>
 
 ## 🌟 项目特点
 
 - **一体化解决方案**：为中小型旅行社提供完整的数字化平台
 - **高性能架构**：支持日均10,000+次并发请求
 - **智能推荐系统**：基于用户行为的个性化推荐算法
+- **🤖 LLM智能推荐**：大语言模型驱动的智能化推荐，支持本地和云端模型
 - **多端支持**：统一API支持Web、App、小程序等多种终端
 - **安全可靠**：JWT令牌鉴权，接口响应成功率99.8%
+- **弹性扩展**：模块化设计，易于集成新的AI服务和功能
 
 ## 🏗️ 技术架构
 
 ### 后端技术栈
-- **Spring Boot 2.7+** - 快速开发框架
+- **Spring Boot 3.2+** - 快速开发框架
 - **Spring Security** - 安全框架
 - **MyBatis** - ORM框架
 - **MySQL 8.0** - 关系型数据库
 - **JWT** - Token认证机制
 - **Maven** - 项目构建工具
+- **LLM Integration** - 大语言模型智能推荐
+  - **Ollama** - 本地LLM服务支持
+  - **OpenAI** - 云端GPT模型支持
+  - **WebFlux** - 响应式编程
+  - **WebClient** - 异步HTTP客户端
 
 ### 前端技术栈
-- **Vue 3** - 渐进式JavaScript框架
+- **Vue 3.2+** - 渐进式JavaScript框架，采用Composition API
 - **Element Plus** - Vue 3组件库
-- **Vue Router** - 路由管理
-- **Vuex** - 状态管理
+- **Vue Router 4** - 路由管理
+- **Vuex 4** - 状态管理
 - **Axios** - HTTP客户端
+- **LLM UI Components** - 大语言模型用户界面组件
+- **Responsive Design** - 响应式设计，支持多端访问
 
 ## 📁 项目结构
 
@@ -63,11 +69,18 @@ tour-saas/
 ## 🚀 快速开始
 
 ### 环境要求
-- JDK 8+
+- JDK 17+ (Spring Boot 3.2+要求)
 - Maven 3.6+
 - MySQL 8.0
 - Node.js 14+
 - npm 6+
+
+### LLM服务要求 (可选)
+- **Ollama (本地LLM)**: 
+  - 下载地址：https://ollama.ai/
+  - 推荐模型：llama3.2
+- **OpenAI (云端LLM)**:
+  - API密钥：https://platform.openai.com/api-keys
 
 ### 详细启动指南
 有关详细的环境配置和启动说明，请查看 [启动指南](docs/STARTUP_GUIDE.md)。
@@ -175,6 +188,19 @@ npm run serve
 - [x] 协同过滤推荐
 - [x] 推荐结果展示
 - [x] 推荐效果分析
+- [x] **LLM智能推荐** - 大语言模型驱动的智能推荐
+- [x] **多提供商支持** - Ollama本地模型 + OpenAI云端模型
+- [x] **个性化旅行建议** - 基于用户行为的定制化建议
+- [x] **用户行为分析** - 深度分析用户旅行偏好
+- [x] **智能降级** - LLM服务不可用时自动降级到传统算法
+
+### 前端功能
+- [x] **现代化UI** - 基于Vue 3和Element Plus的现代化界面
+- [x] **LLM推荐组件** - 专门的大语言模型推荐界面
+- [x] **服务状态监控** - 实时显示LLM服务可用性
+- [x] **响应式设计** - 完美适配桌面端和移动端
+- [x] **用户体验优化** - 优雅的加载动画和错误处理
+- [x] **实时交互** - 即时的用户反馈和状态更新
 
 ## 🛠️ 性能优化
 
@@ -186,6 +212,101 @@ npm run serve
 - **RESTful设计**：标准化API接口设计
 - **响应优化**：统一响应格式，接口响应成功率99.8%
 - **缓存策略**：热点数据缓存机制
+- **LLM集成优化**：
+  - **异步处理**：使用WebFlux实现非阻塞LLM调用
+  - **超时控制**：可配置的LLM请求超时机制
+  - **错误恢复**：LLM服务不可用时自动降级到传统推荐算法
+  - **连接池管理**：HTTP连接池优化，提升并发性能
+
+## 🤖 LLM智能推荐系统
+
+本项目集成了先进的大语言模型(LLM)技术，提供智能化的旅游推荐服务。
+
+### 前端LLM特性
+
+#### 1. 智能推荐界面
+- **LlmRecommendations.vue**: 专门的LLM推荐组件
+- **实时服务状态**: 动态显示Ollama和OpenAI服务可用性
+- **提供商切换**: 支持本地和云端LLM模型切换
+- **推荐结果展示**: 美观的推荐卡片和评分系统
+
+#### 2. 个性化功能
+- **旅行建议**: 格式化的个性化旅行建议
+- **行为分析**: 深度的用户偏好分析报告
+- **智能降级**: LLM服务不可用时自动降级到传统算法
+
+#### 3. 用户体验
+- **响应式设计**: 支持桌面端和移动端
+- **加载状态**: 优雅的加载动画和错误处理
+- **实时交互**: 即时的用户反馈和状态更新
+
+### 核心特性
+
+#### 1. 双LLM提供商支持
+- **Ollama (本地)**：支持本地部署的LLM模型，保护数据隐私
+- **OpenAI (云端)**：集成GPT模型，提供强大的推理能力
+
+#### 2. 智能推荐API
+```bash
+# LLM智能推荐
+POST /api/recommendations/llm/generate/{userId}?provider={provider}
+
+# 个性化旅行建议
+POST /api/recommendations/llm/suggestions/{userId}?provider={provider}
+
+# 用户行为分析
+POST /api/recommendations/llm/analyze/{userId}?provider={provider}
+
+# 服务状态检查
+GET /api/recommendations/llm/status
+```
+
+#### 3. 配置管理
+在 `application.yml` 中配置LLM设置：
+```yaml
+llm:
+  provider: ollama  # ollama, openai
+  model: llama3.2    # 默认模型
+  base-url: http://localhost:11434
+  api-key: ${OPENAI_API_KEY:}
+  max-tokens: 1000
+  temperature: 0.7
+  timeout: 30s
+```
+
+### 快速开始
+
+#### Ollama本地部署
+```bash
+# 安装并启动Ollama
+ollama serve
+
+# 下载推荐模型
+ollama pull llama3.2
+
+# 验证安装
+ollama list
+```
+
+#### OpenAI云端配置
+```bash
+# 设置API密钥
+export OPENAI_API_KEY="your-openai-api-key"
+```
+
+### 测试示例
+```bash
+# 检查服务状态
+curl http://localhost:8080/api/recommendations/llm/status
+
+# 生成智能推荐
+curl -X POST "http://localhost:8080/api/recommendations/llm/generate/1?provider=ollama"
+
+# 获取个性化建议
+curl -X POST "http://localhost:8080/api/recommendations/llm/suggestions/1?provider=ollama"
+```
+
+详细使用说明请参考：[LLM推荐系统文档](tour-saas-backend/LLM_RECOMMENDATION_README.md)
 
 ## 📊 API文档
 
@@ -208,6 +329,21 @@ npm run serve
 cd tour-saas-backend
 mvn clean package
 java -jar target/tour-saas-0.0.1-SNAPSHOT.jar
+```
+
+### LLM服务部署 (可选)
+```bash
+# 启动Ollama本地服务
+ollama serve
+
+# 下载推荐模型
+ollama pull llama3.2
+
+# 设置OpenAI API密钥 (Linux/Mac)
+export OPENAI_API_KEY="your-openai-api-key"
+
+# 设置OpenAI API密钥 (Windows)
+set OPENAI_API_KEY=your-openai-api-key
 ```
 
 ### 前端部署
@@ -234,8 +370,8 @@ npm run build
 
 ## 📞 联系方式
 
-- 项目地址: [https://github.com/yourusername/tour-saas](https://github.com/yourusername/tour-saas)
-- 邮箱: your-email@example.com
+- 项目地址: [https://github.com/EnZ0cez/Tour-Saas/](https://github.com/yourusername/tour-saas)
+- 邮箱: enzochen617@gmail.com
 
 ## 🙏 致谢
 

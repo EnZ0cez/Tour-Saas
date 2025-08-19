@@ -27,13 +27,16 @@
         <el-col :span="8">
           <el-card class="feature-card">
             <div class="feature-content">
-              <h3>多端管理</h3>
-              <p>统一的后台管理系统，支持Web、App、小程序</p>
+              <h3>🤖 LLM智能推荐</h3>
+              <p>大语言模型驱动的智能化推荐，支持本地和云端模型</p>
             </div>
           </el-card>
         </el-col>
       </el-row>
     </div>
+
+    <!-- LLM智能推荐组件 -->
+    <LlmRecommendations v-if="currentUser" :user-id="currentUser.id" />
     
     <div class="products">
       <h2>热门旅游产品</h2>
@@ -56,15 +59,23 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import productService from '@/services/productService'
+import LlmRecommendations from '@/components/LlmRecommendations.vue'
 
 export default {
   name: 'Home',
+  components: {
+    LlmRecommendations
+  },
   setup() {
     const router = useRouter()
+    const store = useStore()
     const products = ref([])
+    
+    const currentUser = computed(() => store.state.user)
     
     const viewProduct = (id) => {
       router.push(`/product/${id}`)
@@ -85,6 +96,7 @@ export default {
     
     return {
       products,
+      currentUser,
       viewProduct
     }
   }
