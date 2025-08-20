@@ -1,40 +1,38 @@
 import api from './api'
 
-class ProductService {
+export default {
   // 获取所有产品
-  getProducts() {
+  getAllProducts() {
     return api.get('/products')
-  }
-
-  // 根据ID获取产品
+  },
+  
+  // 获取产品详情
   getProductById(id) {
     return api.get(`/products/${id}`)
-  }
-
-  // 创建产品
-  createProduct(productData) {
-    return api.post('/products', productData)
-  }
-
-  // 更新产品
-  updateProduct(id, productData) {
-    return api.put(`/products/${id}`, productData)
-  }
-
-  // 删除产品
+  },
+  
+  // 按类型获取产品
+  getProductsByType(type) {
+    return api.get(`/products/type/${type}`)
+  },
+  
+  // 搜索产品
+  searchProducts(keyword) {
+    return api.get('/products/search', { params: { keyword } })
+  },
+  
+  // 创建产品（管理员功能）
+  createProduct(product) {
+    return api.post('/products', product)
+  },
+  
+  // 更新产品（管理员功能）
+  updateProduct(id, product) {
+    return api.put(`/products/${id}`, product)
+  },
+  
+  // 删除产品（管理员功能）
   deleteProduct(id) {
     return api.delete(`/products/${id}`)
   }
-
-  // 根据类型获取产品
-  getProductsByType(type) {
-    return api.get(`/products/type/${type}`)
-  }
-
-  // 搜索产品
-  searchProducts(keyword) {
-    return api.get(`/products/search?keyword=${keyword}`)
-  }
 }
-
-export default new ProductService()

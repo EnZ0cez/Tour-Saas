@@ -1,40 +1,86 @@
 import { createStore } from 'vuex'
-import Cookies from 'js-cookie'
+import authService from '../services/authService'
 
 export default createStore({
   state: {
-    token: Cookies.get('token') || '',
-    userInfo: null
+    user: null,
+    token: localStorage.getItem('token') || null,
+    loading: false,
+    error: null
   },
+  
   getters: {
-    isLoggedIn: state => !!state.token,
-    username: state => state.userInfo ? state.userInfo.username : ''
+    isAuthenticated: state => !!state.token,
+    currentUser: state => state.user,
+    token: state => state.token,
+    isLoading: state => state.loading,
+    error: state => state.error
   },
+  
   mutations: {
+    SET_USER(state, user) {
+      state.user = user
+    },
     SET_TOKEN(state, token) {
       state.token = token
-      Cookies.set('token', token)
+      if (token) {
+        localStorage.setItem('token', token)
+      } else {
+        localStorage.removeItem('token')
+      }
     },
-    CLEAR_TOKEN(state) {
-      state.token = ''
-      state.userInfo = null
-      Cookies.remove('token')
+    SET_LOADING(state, loading) {
+      state.loading = loading
     },
-    SET_USER_INFO(state, userInfo) {
-      state.userInfo = userInfo
+    SET_ERROR(state, error) {
+      state.error = error
+    },
+    CLEAR_ERROR(state) {
+      state.error = null
     }
   },
+  
   actions: {
-    login({ commit }, token) {
-      commit('SET_TOKEN', token)
+    async login({ commit }, credentials) {
+      commit('SET_LOADING', true)
+      commit('CLEAR_ERROR')
+      
+      try {
+        const response = await authService.login(credentials)
+        commit('SET_TOKEN', response.data.token)
+        commit('SET_USER', response.data.user)
+        return response
+      } catch (error) {
+        commit('SET_ERROR', error.response?.data?.error || '登录失败')
+        throw error
+      } finally {
+        commit('SET_LOADING', false)
+      }
     },
+    
+    async register({ commit }, userData) {
+      commit('SET_LOADING', true)
+      commit('CLEAR_ERROR')
+      
+      try {
+        const response = await authService.register(userData)
+        return response
+      } catch (error) {
+        commit('SET_ERROR', error.response?.data?.error || '注册失败')
+        throw error
+      } finally {
+        commit('SET_LOADING', false)
+      }
+    },
+    
     logout({ commit }) {
-      commit('CLEAR_TOKEN')
+      commit('SET_TOKEN', null)
+      commit('SET_USER', null)
+      commit('CLEAR_ERROR')
     },
-    setUserInfo({ commit }, userInfo) {
-      commit('SET_USER_INFO', userInfo)
+    
+    clearError({ commit }) {
+      commit('CLEAR_ERROR')
     }
-  },
-  modules: {
   }
 })

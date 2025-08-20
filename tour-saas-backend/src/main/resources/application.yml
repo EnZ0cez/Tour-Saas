@@ -13,14 +13,71 @@ jwt:
   secret: tourSaasSecretKey
   expiration: 86400
 
-# MyBatis配置
-mybatis:
+# MyBatis-Plus配置
+mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.toursaas.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
 
-# LLM配置
+# Spring AI配置
+spring:
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:}
+      chat:
+        options:
+          model: gpt-3.5-turbo
+          temperature: 0.7
+          max-tokens: 1000
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: llama3.2
+          temperature: 0.7
+          max-tokens: 1000
+  
+  # Redis配置
+  redis:
+    host: localhost
+    port: 6379
+    password: 
+    database: 0
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+  
+  # RabbitMQ配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    connection-timeout: 15000
+    
+  # Cache配置
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000
+      cache-null-values: false
+
+# LLM配置 (保持向后兼容)
 llm:
-  provider: ollama  # ollama, openai
+  provider: spring  # spring, ollama, openai
   model: llama3.2    # default model name
   base-url: http://localhost:11434  # default base url
   api-key: ${OPENAI_API_KEY:}  # OpenAI API key
@@ -32,3 +89,7 @@ llm:
   openai-model: gpt-3.5-turbo
   ollama-model: llama3.2
   ollama-base-url: http://localhost:11434
+  
+  # Spring AI specific settings
+  spring-model: llama3.2
+  spring-provider: ollama

@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "llm")
 public class LlmConfigProperties {
     
-    private String provider = "ollama";
+    private String provider = "spring";
     private String model = "llama3.2";
     private String baseUrl = "http://localhost:11434";
     private String apiKey = "";
@@ -21,4 +21,8 @@ public class LlmConfigProperties {
     // Ollama specific settings
     private String ollamaModel = "llama3.2";
     private String ollamaBaseUrl = "http://localhost:11434";
+    
+    // Spring AI specific settings
+    private String springModel = "llama3.2";
+    private String springProvider = "ollama";
 }

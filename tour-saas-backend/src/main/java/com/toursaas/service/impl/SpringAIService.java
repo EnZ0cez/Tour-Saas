@@ -5,17 +5,16 @@ import com.toursaas.service.LlmService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OpenAIService implements LlmService {
+public class SpringAIService implements LlmService {
     
     private final LlmConfigProperties config;
     private final ChatClient chatClient;
     
     @Autowired
-    public OpenAIService(LlmConfigProperties config, ChatModel chatModel) {
+    public SpringAIService(LlmConfigProperties config, ChatModel chatModel) {
         this.config = config;
         this.chatClient = ChatClient.create(chatModel);
     }

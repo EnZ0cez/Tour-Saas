@@ -1,30 +1,40 @@
 import api from './api'
 
-class OrderService {
+export default {
   // 创建订单
   createOrder(orderData) {
-    return api.post('/orders', orderData)
-  }
-
+    const params = new URLSearchParams()
+    params.append('userId', orderData.userId)
+    params.append('productId', orderData.productId)
+    params.append('travelersCount', orderData.travelersCount)
+    params.append('travelDate', orderData.travelDate)
+    
+    return api.post('/orders', params, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+  },
+  
   // 获取用户订单
   getOrdersByUserId(userId) {
     return api.get(`/orders/user/${userId}`)
-  }
-
-  // 根据ID获取订单
+  },
+  
+  // 获取订单详情
   getOrderById(id) {
     return api.get(`/orders/${id}`)
-  }
-
-  // 更新订单状态
-  updateOrderStatus(id, status) {
-    return api.put(`/orders/${id}/status?status=${status}`)
-  }
-
-  // 获取所有订单
+  },
+  
+  // 获取所有订单（管理员功能）
   getAllOrders() {
     return api.get('/orders')
+  },
+  
+  // 更新订单状态
+  updateOrderStatus(id, status) {
+    return api.put(`/orders/${id}/status`, null, {
+      params: { status }
+    })
   }
 }
-
-export default new OrderService()

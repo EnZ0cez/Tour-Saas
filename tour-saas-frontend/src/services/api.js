@@ -1,20 +1,19 @@
 import axios from 'axios'
-import store from '@/store'
-import Cookies from 'js-cookie'
 
-// 创建axios实例
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api', // 后端API地址
-  timeout: 10000
+  baseURL: process.env.VUE_APP_API_URL || 'http://localhost:8080/api',
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 })
 
 // 请求拦截器
 api.interceptors.request.use(
   config => {
-    // 在请求头中添加token
-    const token = store.state.token || Cookies.get('token')
+    const token = localStorage.getItem('token')
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`
+      config.headers.Authorization = `Bearer ${token}`
     }
     return config
   },
@@ -25,13 +24,10 @@ api.interceptors.request.use(
 
 // 响应拦截器
 api.interceptors.response.use(
-  response => {
-    return response
-  },
+  response => response,
   error => {
-    if (error.response && error.response.status === 401) {
-      // token过期或无效，清除本地token并跳转到登录页
-      store.dispatch('logout')
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token')
       window.location.href = '/login'
     }
     return Promise.reject(error)

@@ -1,103 +1,77 @@
 <template>
-  <div class="header">
-    <el-row>
-      <el-col :span="4">
-        <div class="logo">智慧旅游SaaS平台</div>
-      </el-col>
-      <el-col :span="16">
-        <el-menu
-          :default-active="activeIndex"
-          mode="horizontal"
-          @select="handleSelect"
-          background-color="#409EFF"
-          text-color="#fff"
-          active-text-color="#ffd04b"
-        >
-          <el-menu-item index="1">首页</el-menu-item>
-          <el-menu-item index="2">旅游产品</el-menu-item>
-          <el-menu-item index="3">我的订单</el-menu-item>
-          <el-menu-item index="4">智能推荐</el-menu-item>
-        </el-menu>
-      </el-col>
-      <el-col :span="4">
-        <div class="user-info" v-if="isLoggedIn">
-          <el-dropdown @command="handleUserCommand">
-            <span class="el-dropdown-link">
-              {{ username }}<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item command="profile">个人中心</el-dropdown-item>
-                <el-dropdown-item command="logout">退出登录</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <router-link to="/" class="logo-link">
+            <h1>TourSAAS</h1>
+            <span>智慧旅游平台</span>
+          </router-link>
         </div>
-        <div class="user-info" v-else>
-          <el-button @click="goToLogin" type="primary" size="small">登录</el-button>
-          <el-button @click="goToRegister" type="success" size="small">注册</el-button>
+        
+        <nav class="nav">
+          <router-link to="/" class="nav-link">首页</router-link>
+          <router-link to="/products" class="nav-link">旅游产品</router-link>
+          <router-link v-if="isAuthenticated" to="/recommendations" class="nav-link">智能推荐</router-link>
+          <router-link v-if="isAuthenticated" to="/orders" class="nav-link">我的订单</router-link>
+        </nav>
+        
+        <div class="user-actions">
+          <template v-if="isAuthenticated">
+            <el-dropdown @command="handleCommand">
+              <span class="user-info">
+                {{ currentUser?.username }}
+                <el-icon><arrow-down /></el-icon>
+              </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item command="profile">个人中心</el-dropdown-item>
+                  <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </template>
+          <template v-else>
+            <router-link to="/login" class="btn btn-secondary">登录</router-link>
+            <router-link to="/register" class="btn btn-primary">注册</router-link>
+          </template>
         </div>
-      </el-col>
-    </el-row>
-  </div>
+      </div>
+    </div>
+  </header>
 </template>
 
 <script>
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { computed } from 'vue'
+import { ArrowDown } from '@element-plus/icons-vue'
 
 export default {
   name: 'Header',
+  components: {
+    ArrowDown
+  },
   setup() {
     const store = useStore()
     const router = useRouter()
-    
-    const isLoggedIn = computed(() => store.getters.isLoggedIn)
-    const username = computed(() => store.getters.username)
-    
-    const handleSelect = (key) => {
-      switch(key) {
-        case '1':
-          router.push('/')
-          break
-        case '2':
-          router.push('/products')
-          break
-        case '3':
-          router.push('/orders')
-          break
-        case '4':
-          router.push('/recommendations')
-          break
-      }
-    }
-    
-    const handleUserCommand = (command) => {
+
+    const isAuthenticated = computed(() => store.getters.isAuthenticated)
+    const currentUser = computed(() => store.getters.currentUser)
+
+    const handleCommand = (command) => {
       if (command === 'logout') {
         store.dispatch('logout')
-        router.push('/login')
+        router.push('/')
       } else if (command === 'profile') {
         router.push('/profile')
       }
     }
-    
-    const goToLogin = () => {
-      router.push('/login')
-    }
-    
-    const goToRegister = () => {
-      router.push('/register')
-    }
-    
+
     return {
-      activeIndex: '1',
-      isLoggedIn,
-      username,
-      handleSelect,
-      handleUserCommand,
-      goToLogin,
-      goToRegister
+      isAuthenticated,
+      currentUser,
+      handleCommand
     }
   }
 }
@@ -105,27 +79,114 @@ export default {
 
 <style scoped>
 .header {
-  display: flex;
-  align-items: center;
-  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.logo {
-  font-size: 20px;
-  font-weight: bold;
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-link {
+  text-decoration: none;
   color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.logo span {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s;
+}
+
+.nav-link:hover,
+.nav-link.router-link-active {
+  opacity: 0.8;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .user-info {
+  cursor: pointer;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  height: 100%;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
 }
 
-.el-dropdown-link {
-  cursor: pointer;
-  color: #fff;
-  margin-right: 20px;
+.user-info:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background-color: #409eff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #66b1ff;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .nav {
+    gap: 1rem;
+  }
+  
+  .user-actions {
+    width: 100%;
+    justify-content: center;
+  }
 }
 </style>
